@@ -1,8 +1,8 @@
 package shopping
 
 class OffersSpec extends ShoppingSpec {
-  override def productsOffers = Map(products.findProduct(Apple.Key).get -> BuyOneGetOneFree,
-    products.findProduct(Orange.Key).get -> Normal)
+  override def productOffers = ProductOffers(Map(products.findProduct(Apple.Key).get -> BuyOneGetOneFreeType,
+    products.findProduct(Orange.Key).get -> Normal))
 
   describe("buy one get one free offer on apples") {
     it ("list contains 1 apple") {
@@ -13,7 +13,7 @@ class OffersSpec extends ShoppingSpec {
       When("a checkout calculates the price of a list of items")
       And("there is an offer of buy one get one free on apples")
       val checkout = Checkout(products)
-      val actual = checkout.price(items, productsOffers)
+      val actual = checkout.price(items, productOffers)
 
       Then("the total price is calculated")
       actual.toString must be(s"£1.10")
@@ -28,7 +28,7 @@ class OffersSpec extends ShoppingSpec {
       And("there is an offer of buy one get one free on apples")
       val checkout = Checkout(products)
 
-      val actual = checkout.price(items, productsOffers)
+      val actual = checkout.price(items, productOffers)
 
       Then("the total price is calculated")
       actual.toString must be(s"£1.10")

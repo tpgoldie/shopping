@@ -1,6 +1,6 @@
 package shopping
 
-class BogofSpec extends ShoppingSpec {
+class BuyOneGetOneFreeSpec extends ShoppingSpec {
   describe("buy one get one free") {
     it("calculates the price of an empty list") {
       Given("a product is not on offer")
@@ -8,11 +8,12 @@ class BogofSpec extends ShoppingSpec {
 
       And("An empty list")
       val items = List.empty
-      val offer = Bogof(product.get, items)
+      val offer = BuyOneGetOneFree(product.get, items)
 
       When("the price is required")
       val price = offer.price
 
+      Then("it calculates the price")
       price must be(Price(0))
     }
 
@@ -22,11 +23,12 @@ class BogofSpec extends ShoppingSpec {
 
       And("A list of 1 apple")
       val items = List("Apple")
-      val offer = Bogof(product.get, items)
+      val offer = BuyOneGetOneFree(product.get, items)
 
       When("the price is required")
       val price = offer.price
 
+      Then("it calculates the price")
       price must be(Price(60))
     }
 
@@ -36,11 +38,12 @@ class BogofSpec extends ShoppingSpec {
 
       And("A list of 2 apples")
       val items = List.fill(2)("Apple")
-      val offer = Bogof(product.get, items)
+      val offer = BuyOneGetOneFree(product.get, items)
 
       When("the price is required")
       val price = offer.price
 
+      Then("it calculates the price")
       price must be(Price(60))
     }
 
@@ -50,11 +53,12 @@ class BogofSpec extends ShoppingSpec {
 
       And("A list of 3 apples")
       val items = List.fill(3)("Apple")
-      val offer = Bogof(product.get, items)
+      val offer = BuyOneGetOneFree(product.get, items)
 
       When("the price is required")
       val price = offer.price
 
+      Then("it calculates the price")
       price must be(Price(120))
     }
 
@@ -64,11 +68,12 @@ class BogofSpec extends ShoppingSpec {
 
       And("A list of 3 apples")
       val items = List.fill(5)("Apple")
-      val offer = Bogof(product.get, items)
+      val offer = BuyOneGetOneFree(product.get, items)
 
       When("the price is required")
       val price = offer.price
 
+      Then("it calculates the price")
       price must be(Price(180))
     }
   }
