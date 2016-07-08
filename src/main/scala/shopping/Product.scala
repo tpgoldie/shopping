@@ -1,8 +1,16 @@
 package shopping
 
-sealed class Product(val name: String, val price: Price) {
+sealed abstract class Product(val name: String, val price: Price) extends UnitCost {
 }
 
-case class Apple(override val price: Price) extends Product("apple", price)
+case class Apple(override val unitPrice: Price) extends Product(Apple.Key, unitPrice)
 
-case class Orange(override val price: Price) extends Product("orange", price)
+object Apple {
+  val Key = "apple"
+}
+
+case class Orange(override val unitPrice: Price) extends Product(Orange.Key, unitPrice)
+
+object Orange {
+  val Key = "orange"
+}
