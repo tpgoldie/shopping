@@ -10,7 +10,7 @@ class CheckoutSpec extends ShoppingSpec {
 
         When("a checkout calculates the price of a list of items")
         val checkout = Checkout(products)
-        val actual = checkout.price(items, productsOffers)
+        val actual = checkout.price(items, productOffers)
 
         Then("the total price is calculated")
         actual.toString must be(s"£2.05")
@@ -23,7 +23,7 @@ class CheckoutSpec extends ShoppingSpec {
 
         When("a checkout calculates the price of a list of items")
         val checkout = Checkout(products)
-        val actual = checkout.price(items, productsOffers)
+        val actual = checkout.price(items, productOffers)
 
         Then("the total price is calculated")
         actual.toString must be(s"£1.10")
@@ -36,7 +36,7 @@ class CheckoutSpec extends ShoppingSpec {
 
         When("a checkout calculates the price of a list of items")
         val checkout = Checkout(products)
-        val actual = checkout.price(items, productsOffers)
+        val actual = checkout.price(items, productOffers)
 
         Then("the total price is calculated")
         actual.toString must be(s"£1.20")
@@ -49,7 +49,7 @@ class CheckoutSpec extends ShoppingSpec {
 
         When("a checkout calculates the price of a list of items")
         val checkout = Checkout(products)
-        val actual = checkout.price(items, productsOffers)
+        val actual = checkout.price(items, productOffers)
 
         Then("the total price is calculated")
         actual.toString must be(s"£0.75")
@@ -62,7 +62,7 @@ class CheckoutSpec extends ShoppingSpec {
 
         When("a checkout calculates the price of a list of items")
         val checkout = Checkout(products)
-        val actual = checkout.price(items, productsOffers)
+        val actual = checkout.price(items, productOffers)
 
         Then("the total price is calculated")
         actual.toString must be(s"£1.70")
@@ -75,10 +75,33 @@ class CheckoutSpec extends ShoppingSpec {
 
         When("a checkout calculates the price of a list of items")
         val checkout = Checkout(products)
-        val actual = checkout.price(items, productsOffers)
+        val actual = checkout.price(items, productOffers)
 
         Then("the total price is calculated")
         actual.toString must be(s"£0.00")
+      }
+
+      it("when list of items contains mix of apples and oranges " +
+        "apples are on BOGOF offer and oranges are on Three For Two offer") {
+        Given("a list of 5 apples and 7 oranges")
+        And("A product repository")
+        And("apples on BOGOF offer")
+        And("oranges on three-for-two offer")
+        val items = List.fill(7)("Orange") ++ List.fill(5)("Apple")
+
+        val productOffers = ProductOffers(
+          Map(
+            products.findProduct(Apple.Key).get -> BuyOneGetOneFreeType,
+            products.findProduct(Orange.Key).get -> ThreeForTwoType
+          )
+        )
+
+        When("a checkout calculates the price of the list of items")
+        val checkout = Checkout(products)
+        val actual = checkout.price(items, productOffers)
+
+        Then("the total price is calculated")
+        actual must be(Price(180 + 125))
       }
     }
   }

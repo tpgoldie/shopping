@@ -1,6 +1,6 @@
 package shopping
 
-case class ProductsPricer(product: Option[Product], items: Map[String, Seq[String]], productsOffers: Map[Product, OfferType]) {
+case class ProductsPricer(product: Option[Product], items: Map[String, Seq[String]], productOffers: ProductOffersRepository) {
   private def filterItems(product: Product) = items.get(product.name)
 
   private val selectedItems = product match {
@@ -8,7 +8,7 @@ case class ProductsPricer(product: Option[Product], items: Map[String, Seq[Strin
     case None => Seq.empty
   }
 
-  private def calculatePrice(product: Product): Price = Offer(product, selectedItems, productsOffers.get(product)).price
+  private def calculatePrice(product: Product): Price = Offer(product, selectedItems, productOffers.findOffer(product)).price
 
   val price = product.fold(Price.Zero)(calculatePrice)
 

@@ -8,6 +8,7 @@ object Offer {
     val ot = offerType.getOrElse(Normal)
     ot match {
       case BuyOneGetOneFreeType => BuyOneGetOneFree(product, items)
+      case ThreeForTwoType => ThreeForTwo(product, items)
       case _ => NormalPricing(product, items)
     }
   }

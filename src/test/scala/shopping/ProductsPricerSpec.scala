@@ -8,7 +8,7 @@ class ProductsPricerSpec extends ShoppingSpec {
     it ("calculates price of a list of products when no offers exist for product") {
       Given("a product pricer")
       And("A list of items")
-      val pricer = ProductsPricer(product, items, Map())
+      val pricer = ProductsPricer(product, items, ProductOffers(Map()))
 
       When("the price of the list of items is required")
       val price = pricer.price
@@ -20,7 +20,9 @@ class ProductsPricerSpec extends ShoppingSpec {
     it ("calculates price of a list of products when BOGOF offers exist for product") {
       Given("a product pricer")
       And("A list of items")
-      val pricer = ProductsPricer(product, items, Map(product.get -> BuyOneGetOneFreeType))
+      And("Product BOGOF offer")
+      val productOffers = ProductOffers(Map(product.get -> BuyOneGetOneFreeType))
+      val pricer = ProductsPricer(product, items, productOffers)
 
       When("the price of the list of items is required")
       val price = pricer.price
