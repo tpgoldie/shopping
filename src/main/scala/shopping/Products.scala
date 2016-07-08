@@ -1,11 +1,18 @@
 package shopping
 
-trait Products {
-  def findProduct(name: String): Option[Product]
+case class Products(product: Option[Product], products: Seq[Product], counter: Counter) extends Pricing {
+  override def price: Price = product map { p => p.price * count } getOrElse Price.Zero
+
+  def count: Int = products.size
 }
 
-object Products extends Products {
-  private val products = Seq(Apple(Price(60)), Orange(Price(25))) map {product => product.name.toLowerCase -> product } toMap
+object Products {
+  def apply(product: Option[Product], products: Seq[Product]): Products = {
+    val selectedProducts = product match {
+      case Some(p) => products filter { p => p == product }
+      case None => Seq.empty
+    }
 
-  override def findProduct(name: String): Option[Product] = products.get(name.toLowerCase)
+    Products(product, selectedProducts, Counter(product))
+  }
 }

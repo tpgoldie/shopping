@@ -1,15 +1,16 @@
 package shopping
 
-import shopping.Price.Zero
+case class Checkout(products: ProductCatalogue) {
+  def price(items: Seq[String], productsOffers: Map[Product, OfferType]) : Price = {
+    val currentProducts = items.groupBy(_.toLowerCase)
 
-case class Checkout(products: Products) {
-  def price(items: Seq[String]) : Price = {
-    val found = items map { item => products.findProduct(item) } flatten
-    val prices = found map { _.price }
+    val appleProduct = products.findProduct(Apple.Key)
+    val p1 = ProductsPricer(appleProduct, currentProducts, productsOffers).price
 
-    if (prices.isEmpty) { Zero }
-    else {
-      prices.reduceLeft(_ + _)
-    }
+    val orangeProduct = products.findProduct(Orange.Key)
+    val p2 = ProductsPricer(orangeProduct, currentProducts, productsOffers).price
+
+    p1 + p2
   }
+
 }
