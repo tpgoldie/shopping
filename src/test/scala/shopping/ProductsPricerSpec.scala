@@ -20,7 +20,7 @@ class ProductsPricerSpec extends ShoppingSpec {
     it ("calculates price of a list of products when BOGOF offers exist for product") {
       Given("a product pricer")
       And("A list of items")
-      val pricer = ProductsPricer(product, items, Map(product.get -> BuyOneGetOneFree))
+      val pricer = ProductsPricer(product, items, Map(product.get -> BuyOneGetOneFreeType))
 
       When("the price of the list of items is required")
       val price = pricer.price

@@ -1,7 +1,7 @@
 package shopping
 
 class OffersSpec extends ShoppingSpec {
-  override def productsOffers = Map(products.findProduct(Apple.Key).get -> BuyOneGetOneFree,
+  override def productsOffers = Map(products.findProduct(Apple.Key).get -> BuyOneGetOneFreeType,
     products.findProduct(Orange.Key).get -> Normal)
 
   describe("buy one get one free offer on apples") {
